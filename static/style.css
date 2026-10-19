@@ -1,0 +1,294 @@
+/* Simple, clean styling. Colours are stored as variables so they are easy to change. */
+:root{--primary:#1d6f42;--dark:#14532d;--bg:#f4f7f5;--text:#1f2937;--muted:#6b7280}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    background:var(--dark);padding:12px 20px}
+nav a{color:#fff;text-decoration:none;margin-left:14px}
+nav .brand{font-weight:700;margin:0}
+main{max-width:900px;margin:24px auto;padding:0 16px;min-height:70vh}
+footer{text-align:center;color:var(--muted);padding:16px;font-size:.85rem}
+.card{background:#fff;border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px #0001}
+.narrow{max-width:460px;margin:30px auto}
+.hero{text-align:center;padding:40px 10px}
+.hero h1{font-size:2rem;margin-bottom:8px}
+.steps,.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+label{display:block;margin-bottom:12px;font-weight:600;font-size:.9rem}
+input,select,textarea{width:100%;padding:9px;margin-top:4px;border:1px solid #d1d5db;border-radius:6px;font:inherit}
+.btn{display:inline-block;background:var(--primary);color:#fff;border:0;padding:10px 18px;
+     border-radius:6px;cursor:pointer;text-decoration:none;font:inherit}
+.btn:hover{background:var(--dark)}
+.btn.ghost{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+.btn.small{padding:8px 12px}
+.muted{color:var(--muted);font-size:.9rem}
+.row{display:flex;justify-content:space-between;align-items:center}
+.flash{padding:10px 14px;border-radius:6px;margin-bottom:12px}
+.flash.success{background:#dcfce7;color:#166534}
+.flash.error{background:#fee2e2;color:#991b1b}
+.badge{padding:3px 10px;border-radius:99px;font-size:.8rem;font-weight:600}
+.badge.pending{background:#fef3c7;color:#92400e}
+.badge.in-progress{background:#dbeafe;color:#1e40af}
+.badge.resolved{background:#dcfce7;color:#166534}
+.tracker{display:flex;gap:6px;margin-top:10px}
+.step{flex:1;text-align:center;padding:6px;font-size:.8rem;background:#e5e7eb;border-radius:6px}
+.step.done{background:var(--primary);color:#fff}
+.note{background:#f0fdf4;padding:8px;border-radius:6px}
+.thumb{max-width:200px;border-radius:8px;display:block;margin:8px 0}
+.stat{text-align:center;font-size:.9rem}
+.stat span{display:block;font-size:2rem;font-weight:700}
+.stat.open span{color:#b45309}.stat.done span{color:var(--primary)}
+.bar-row{display:flex;align-items:center;gap:10px;margin:6px 0}
+.bar-row span{width:150px;font-size:.9rem}
+.bar{flex:1;background:#e5e7eb;border-radius:6px;height:12px}
+.bar div{background:var(--primary);height:100%;border-radius:6px}
+.filters{margin:14px 0}
+.filters a{display:inline-block;padding:6px 12px;border-radius:99px;background:#fff;
+           text-decoration:none;color:var(--text);margin:0 6px 6px 0;font-size:.9rem}
+.filters a.active{background:var(--primary);color:#fff}
+form.inline{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+form.inline select{width:150px}form.inline input{flex:1;min-width:160px}
+
+/* ===== Murang'a town background ===== */
+body {
+  /* A dark green layer sits on top of the photo so the text stays readable.
+     Make the 0.55 / 0.75 numbers smaller for a clearer photo, bigger for a darker one. */
+  background:
+    linear-gradient(rgba(20, 83, 45, 0.55), rgba(0, 0, 0, 0.75)),
+    url("images/muranga-town.jpg") center / cover no-repeat fixed;
+}
+
+/* Navigation bar: slightly see-through with a blur effect */
+nav {
+  background: rgba(20, 83, 45, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+/* Text that sits directly on the photo must be white */
+.hero h1, .hero p, main > h2 {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+.hero h1 { font-size: 2.4rem; }
+.hero { padding: 70px 10px; }
+
+/* Cards stay white and slightly see-through so they pop from the photo */
+.card { background: rgba(255, 255, 255, 0.95); }
+
+footer { color: #e5e7eb; }
+
+/* ===== Animations (small and subtle) ===== */
+
+/* 1. Page content fades in and slides up slightly when a page loads */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+main > * { animation: fadeUp 0.5s ease both; }
+/* Each following item starts a little later, so they appear one after another */
+main > *:nth-child(2) { animation-delay: 0.08s; }
+main > *:nth-child(3) { animation-delay: 0.16s; }
+main > *:nth-child(4) { animation-delay: 0.24s; }
+
+/* 2. Cards lift up when you hover over them (not the login/register forms) */
+.card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.card:not(.narrow):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* 3. Buttons: grow slightly on hover, press down when clicked */
+.btn { transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25); }
+.btn:active { transform: translateY(0) scale(0.97); }
+
+/* 4. Navigation links get an underline that slides in on hover */
+nav a:not(.brand) { position: relative; padding-bottom: 3px; }
+nav a:not(.brand)::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 2px; background: #fff; transition: width 0.25s ease;
+}
+nav a:not(.brand):hover::after { width: 100%; }
+
+/* 5. Input boxes glow green when you click inside them */
+input, select, textarea { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(29, 111, 66, 0.25);
+}
+
+/* 6. Success/error messages slide in from the top */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.flash { animation: slideDown 0.4s ease; }
+
+/* 7. Analytics bars grow from zero to their value when the dashboard opens */
+@keyframes growBar { from { width: 0; } }
+.bar div { animation: growBar 0.9s ease-out; }
+
+/* 8. Progress tracker steps change colour smoothly */
+.step { transition: background 0.3s ease, transform 0.2s ease; }
+.step.done { animation: fadeUp 0.5s ease both; }
+
+/* 9. Uploaded photos zoom slightly on hover */
+.thumb { transition: transform 0.3s ease; }
+.thumb:hover { transform: scale(1.05); }
+
+/* 10. Filter buttons on the admin dashboard */
+.filters a { transition: background 0.2s ease, transform 0.15s ease; }
+.filters a:hover { transform: translateY(-2px); background: #dcfce7; }
+.filters a.active:hover { background: var(--dark); }
+
+/* 11. Status badges pulse gently so "Pending" and "In Progress" catch the eye */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.35); }
+  50%      { box-shadow: 0 0 0 6px rgba(180, 83, 9, 0); }
+}
+.badge.pending, .badge.in-progress { animation: pulse 2s infinite; }
+
+/* 12. Home page hero text is a little slower and bigger in entrance */
+.hero h1 { animation: fadeUp 0.8s ease both; }
+.hero p  { animation: fadeUp 0.8s ease 0.2s both; }
+
+/* 13. Respect users who turn animations off in their device settings */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ===== Flicker for new (Pending) requests ===== */
+
+/* The card's glowing border blinks on and off */
+@keyframes flicker {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.95), 0 0 18px rgba(245, 158, 11, 0.7); }
+  50%      { box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25), 0 0 4px rgba(245, 158, 11, 0.15); }
+}
+/* fadeUp = normal entrance, flicker = the repeating glow (starts after the entrance) */
+.card.new {
+  border-left: 6px solid #f59e0b;
+  animation: fadeUp 0.5s ease both, flicker 1.4s ease-in-out 0.6s infinite;
+}
+
+/* Small "NEW" label that blinks next to the request title */
+@keyframes blink { 50% { opacity: 0.25; } }
+.new-tag {
+  background: #f59e0b; color: #fff; font-size: 0.7rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 99px; margin-left: 8px;
+  animation: blink 1s steps(1) infinite;
+}
+
+/* ===== Navigation buttons for citizens ===== */
+nav a.nav-btn {
+  display: inline-block;
+  padding: 8px 16px;              /* makes the link big enough to look like a button */
+  border-radius: 99px;            /* fully rounded ends */
+  font-weight: 600;
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+nav a.nav-btn::after { display: none; }   /* remove the sliding underline on buttons */
+
+/* "New Request": solid bright button, the main action */
+nav a.nav-btn.primary { background: #f59e0b; color: #1f2937; }
+nav a.nav-btn.primary:hover { background: #fbbf24; }
+
+/* "My Requests": white outline button */
+nav a.nav-btn.outline { border: 2px solid #fff; color: #fff; padding: 6px 14px; }
+nav a.nav-btn.outline:hover { background: #fff; color: var(--dark); }
+
+/* Both lift slightly on hover */
+nav a.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+/* The page you are currently on is highlighted */
+nav a.nav-btn.current { background: #fff; color: var(--dark); }
+
+/* Small screens: tighten the buttons so they fit */
+@media (max-width: 600px) {
+  nav a.nav-btn { padding: 6px 10px; font-size: 0.85rem; }
+}
+
+/* ===== Admin message: unread vs read ===== */
+.admin-msg { margin-top: 12px; padding: 10px 14px; border-radius: 8px; }
+.admin-msg p { margin: 8px 0 2px; }
+
+/* Read: calm green box, normal text */
+.admin-msg.read { background: #f0fdf4; border-left: 5px solid var(--primary); font-weight: 400; }
+.admin-msg .msg-title { font-weight: 600; color: var(--dark); }
+
+/* Unread: amber, bold, glowing, looks like a new message */
+@keyframes msgGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55); }
+  50%      { box-shadow: 0 0 0 7px rgba(245, 158, 11, 0); }
+}
+.admin-msg.unread {
+  background: #fffbeb; border-left: 5px solid #f59e0b;
+  font-weight: 700; animation: msgGlow 1.8s infinite;
+}
+.admin-msg summary { cursor: pointer; list-style: none; }
+.admin-msg summary::-webkit-details-marker { display: none; }   /* hide default arrow */
+.admin-msg small { font-weight: 400; color: var(--muted); }
+
+/* Little red dot, like an unread notification */
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+       background: #ef4444; margin-left: 4px; vertical-align: middle; }
+
+/* Number badge on the "My Requests" menu link */
+.nav-badge { background: #ef4444; color: #fff; font-size: .72rem; font-weight: 700;
+             padding: 1px 7px; border-radius: 99px; margin-left: 6px; }
+
+/* ===== Priority tags ===== */
+.prio { font-size: .7rem; font-weight: 700; padding: 2px 9px; border-radius: 99px;
+        margin-left: 8px; vertical-align: middle; }
+.prio.low    { background: #e5e7eb; color: #374151; }
+.prio.medium { background: #dbeafe; color: #1e40af; }
+.prio.urgent { background: #dc2626; color: #fff; }
+
+/* Urgent requests: red border and a red glow on the admin dashboard */
+@keyframes urgentGlow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(220,38,38,.95), 0 0 18px rgba(220,38,38,.6); }
+  50%      { box-shadow: 0 0 0 2px rgba(220,38,38,.3),  0 0 4px rgba(220,38,38,.15); }
+}
+.card.urgent, .card.new.urgent {
+  border-left: 6px solid #dc2626; background: #fef2f2;
+  animation: fadeUp .5s ease both, urgentGlow 1.2s ease-in-out .6s infinite;
+}
+
+/* ===== Edit / Cancel buttons ===== */
+.actions { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+.actions form { margin: 0; }
+.btn.danger { background: #dc2626; }
+.btn.danger:hover { background: #991b1b; }
+
+/* ===== Search box ===== */
+.search-box { margin: 14px 0 6px; padding: 12px 14px; font-size: 1rem;
+              background: rgba(255,255,255,.95); }
+
+/* ===== Splash screen ===== */
+#splash {
+  position: fixed; inset: 0; z-index: 9999;          /* covers everything */
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  color: #fff; cursor: pointer;
+  background:
+    linear-gradient(rgba(20, 83, 45, 0.85), rgba(0, 0, 0, 0.9)),
+    url("images/muranga-town.jpg") center / cover no-repeat;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#splash.hide { opacity: 0; visibility: hidden; }     /* the fade-out */
+html.no-splash #splash { display: none; }            /* already seen this session */
+
+/* Logo pops in, then the text fades up one after another */
+@keyframes splashPop { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
+.splash-logo { font-size: 4.5rem; animation: splashPop 0.8s ease both; }
+#splash h1 { margin: 10px 0 4px; font-size: 2.2rem; animation: fadeUp 0.7s ease 0.4s both; }
+#splash p  { margin: 0; color: #d1fae5; animation: fadeUp 0.7s ease 0.7s both; }
+#splash small { margin-top: 12px; color: #9ca3af; animation: fadeUp 0.7s ease 1s both; }
+
+/* Loading bar fills from empty to full */
+@keyframes splashLoad { to { width: 100%; } }
+.splash-bar { width: 220px; height: 6px; margin-top: 28px; border-radius: 99px;
+              background: rgba(255, 255, 255, 0.25); overflow: hidden; }
+.splash-bar div { height: 100%; width: 0; background: #f59e0b;
+                  animation: splashLoad 2.2s ease-in-out forwards; }
+
+/* If the user has animations turned off, just show the bar full */
+@media (prefers-reduced-motion: reduce) { .splash-bar div { width: 100%; } }

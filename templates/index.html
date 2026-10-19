@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block content %}
+<section class="hero">
+  <h1>Report a problem. Track the fix.</h1>
+  <p>Broken streetlight? Water issue? Uncollected garbage? Tell your county in a minute.</p>
+  {% if session.user_id %}
+    <a class="btn" href="{{ url_for('submit') }}">Submit a request</a>
+  {% else %}
+    <a class="btn" href="{{ url_for('register') }}">Get started</a>
+    <a class="btn ghost" href="{{ url_for('login') }}">Login</a>
+  {% endif %}
+</section>
+<section class="steps">
+  <div class="card"><h3>1. Register</h3><p>Create a free citizen account.</p></div>
+  <div class="card"><h3>2. Submit</h3><p>Pick a category, add the location and a photo.</p></div>
+  <div class="card"><h3>3. Track</h3><p>Watch it move: Pending → In Progress → Resolved.</p></div>
+</section>
+{% endblock %}

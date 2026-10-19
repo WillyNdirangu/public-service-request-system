@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% block content %}
+<h2>My requests</h2>
+{% for r in requests %}
+<div class="card">
+  <div class="row"><strong>#{{ r.id }} &middot; {{ r.category }}</strong>
+    <span class="badge {{ r.status|replace(' ','-')|lower }}">{{ r.status }}</span></div>
+  <p class="muted">📍 {{ r.location }} &middot; {{ r.created_at[:16] }}</p>
+  <p>{{ r.description }}</p>
+  {% if r.image %}<img class="thumb" src="{{ url_for('static', filename='uploads/' ~ r.image) }}" alt="photo">{% endif %}
+  <!-- Progress tracker: steps up to the current status are highlighted -->
+  {% set cur = statuses.index(r.status) %}
+  <div class="tracker">
+    {% for s in statuses %}<div class="step {{ 'done' if loop.index0 <= cur }}">{{ s }}</div>{% endfor %}
+  </div>
+    {% if r.admin_note %}
+    {% if r.note_read %}
+      <!-- Already opened: calm, normal text -->
+      <div class="admin-msg read">
+        <div class="msg-title">💬 Response from admin</div>
+        <p>{{ r.admin_note }}</p>
+      </div>
+    {% else %}
+      <!-- Not opened yet: bold and glowing. Click to open it. -->
+      <details class="admin-msg unread" data-id="{{ r.id }}">
+        <summary>✉️ New message from admin <span class="dot"></span> <small>(click to read)</small></summary>
+        <p>{{ r.admin_note }}</p>
+      </details>
+    {% endif %}
+  {% endif %}
+</div>
+{% else %}
+<div class="card"><p>You have no requests yet. <a href="{{ url_for('submit') }}">Submit one</a>.</p></div>
+{% endfor %}
+<script>
+  // When the citizen opens an unread message, tell the server it has been read,
+  // and remove the "unread" look straight away.
+  document.querySelectorAll("details.unread").forEach(function (box) {
+    box.addEventListener("toggle", function () {
+      if (box.open && !box.dataset.sent) {
+        box.dataset.sent = "1";
+        fetch("/requests/" + box.dataset.id + "/read", { method: "POST" });
+        box.classList.remove("unread");
+        box.classList.add("read");
+      }
+    });
+  });
+</script>
+{% endblock %}

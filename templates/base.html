@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Huduma Requests</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+    // If the splash was already shown in this browser session, hide it immediately
+    if (sessionStorage.getItem("splashSeen")) document.documentElement.classList.add("no-splash");
+  </script>
+</head>
+<body>
+  <!-- Splash screen: shown once per browser session, click anywhere to skip -->
+<div id="splash">
+  <div class="splash-logo">🏛️</div>
+  <h1>Huduma Requests</h1>
+  <p>Murang'a County Public Service Portal</p>
+  <div class="splash-bar"><div></div></div>
+  <small>Loading… (click to skip)</small>
+</div>
+<!-- Top navigation: links change depending on who is logged in -->
+<nav>
+  <a class="brand" href="{{ url_for('index') }}">🏛️ Huduma Requests</a>
+  <div>
+    {% if session.user_id %}
+      {% if session.is_admin %}<a href="{{ url_for('admin') }}">Dashboard</a>
+      {% else %}
+        <a class="nav-btn primary {{ 'current' if request.endpoint == 'submit' }}" href="{{ url_for('submit') }}">＋ New Request</a>
+        <a class="nav-btn outline {{ 'current' if request.endpoint == 'my_requests' }}" href="{{ url_for('my_requests') }}">📋 My Requests {% if unread_count %}<span class="nav-badge">{{ unread_count }}</span>{% endif %}</a>
+      {% endif %}
+      <a href="{{ url_for('logout') }}">Logout ({{ session.name }})</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  </div>
+</nav>
+<main>
+  <!-- Flash messages (success / error notices) -->
+  {% for cat, msg in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ cat }}">{{ msg }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Public Service Request System &middot; Demo project</footer>
+<script>
+  // Fade the splash screen out after 2.4 seconds (or when it is clicked)
+  (function () {
+    var splash = document.getElementById("splash");
+    if (!splash || document.documentElement.classList.contains("no-splash")) return;
+    function closeSplash() {
+      splash.classList.add("hide");                  // starts the fade-out
+      sessionStorage.setItem("splashSeen", "1");     // remember it was shown
+      setTimeout(function () { splash.remove(); }, 700);
+    }
+    setTimeout(closeSplash, 2400);
+    splash.addEventListener("click", closeSplash);
+  })();
+</script>
+</body>
+</html>

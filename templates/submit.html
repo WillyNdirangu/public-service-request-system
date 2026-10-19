@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}
+<div class="card narrow"><h2>Submit a service request</h2>
+<!-- enctype is required so the image file can be uploaded -->
+<form method="post" enctype="multipart/form-data">
+  <label>Category
+    <select name="category" required>
+      {% for c in categories %}<option>{{ c }}</option>{% endfor %}
+    </select></label>
+  <label>Priority
+    <select name="priority">
+      {% for p in priorities %}<option {{ 'selected' if p == 'Medium' }}>{{ p }}</option>{% endfor %}
+    </select></label>
+  <label>Location<input name="location" placeholder="e.g. Kimathi Street, near the market" required></label>
+  <label>Description<textarea name="description" rows="4" required></textarea></label>
+  <label>Photo (optional)<input type="file" name="image" accept="image/*"></label>
+  <button class="btn">Submit request</button>
+</form></div>
+{% endblock %}

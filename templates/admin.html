@@ -1,0 +1,67 @@
+{% extends "base.html" %}{% block content %}
+<h2>Admin dashboard</h2>
+
+<!-- Basic analytics: open vs resolved -->
+<section class="stats">
+  <div class="card stat"><span>{{ stats.total }}</span>Total</div>
+  <div class="card stat open"><span>{{ stats.open }}</span>Open</div>
+  <div class="card stat done"><span>{{ stats.resolved }}</span>Resolved</div>
+</section>
+
+<div class="card"><h3>Requests by category</h3>
+  {% for c in by_cat %}
+    <div class="bar-row"><span>{{ c.category }}</span>
+      <div class="bar"><div style="width: {{ (c.c / stats.total * 100)|round }}%"></div></div>
+      <b>{{ c.c }}</b></div>
+  {% else %}<p class="muted">No data yet.</p>{% endfor %}
+</div>
+
+<!-- Instant search: filters the cards below as you type -->
+<input id="search" class="search-box" type="search"
+       placeholder="🔍 Search by name, location, keyword, status or priority...">
+<p id="no-results" class="muted" style="display:none;color:#fff">No requests match your search.</p>
+
+<!-- Filter buttons -->
+<div class="filters">
+  <a class="{{ 'active' if not current }}" href="{{ url_for('admin') }}">All</a>
+  {% for s in statuses %}<a class="{{ 'active' if current == s }}" href="{{ url_for('admin', status=s) }}">{{ s }} ({{ stats.counts[s] }})</a>{% endfor %}
+</div>
+
+{% for r in requests %}
+<!-- Pending requests get the extra "new" class, which makes them flicker -->
+<div class="card {{ 'new' if r.status == 'Pending' }} {{ 'urgent' if r.priority == 'Urgent' and r.status != 'Resolved' }}"
+     data-search="{{ (r.citizen ~ ' ' ~ r.category ~ ' ' ~ r.location ~ ' ' ~ r.description ~ ' ' ~ r.status ~ ' ' ~ r.priority ~ ' #' ~ r.id)|lower }}">
+  <div class="row"><strong>#{{ r.id }} &middot; {{ r.category }}
+        {% if r.status == 'Pending' %}<span class="new-tag">NEW</span>{% endif %}
+    <span class="prio {{ r.priority|lower }}">{{ r.priority }}</span></strong>
+    <span class="badge {{ r.status|replace(' ','-')|lower }}">{{ r.status }}</span></div>
+  <p class="muted">By {{ r.citizen }} &middot; 📍 {{ r.location }} &middot; {{ r.created_at[:16] }}</p>
+  <p>{{ r.description }}</p>
+  {% if r.image %}<img class="thumb" src="{{ url_for('static', filename='uploads/' ~ r.image) }}" alt="photo">{% endif %}
+
+  <!-- Admin changes the status and can leave a note for the citizen -->
+  <form class="inline" method="post" action="{{ url_for('update_status', req_id=r.id) }}">
+    <select name="status">
+      {% for s in statuses %}<option {{ 'selected' if s == r.status }}>{{ s }}</option>{% endfor %}
+    </select>
+    <input name="note" placeholder="Note to citizen (optional)" value="{{ r.admin_note or '' }}">
+    <button class="btn small">Update</button>
+  </form>
+</div>
+{% else %}<div class="card"><p>No requests found.</p></div>{% endfor %}
+
+<script>
+  // Hide every request card whose text does not contain what the admin typed
+  var box = document.getElementById("search");
+  box.addEventListener("input", function () {
+    var text = box.value.toLowerCase().trim();
+    var shown = 0;
+    document.querySelectorAll(".card[data-search]").forEach(function (card) {
+      var match = card.dataset.search.indexOf(text) !== -1;
+      card.style.display = match ? "" : "none";
+      if (match) shown++;
+    });
+    document.getElementById("no-results").style.display = shown ? "none" : "block";
+  });
+</script>
+{% endblock %}
