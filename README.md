@@ -2,10 +2,10 @@
 
 A web app where citizens report local problems (broken streetlights, water issues, uncollected garbage) and track their progress, while administrators manage the requests from a dashboard with simple analytics.
 
-**Live demo:** _add your PythonAnywhere link here once deployed_
+- **Live demo:** https://willyndirangu.pythonanywhere.com
 **Repository:** https://github.com/WillyNdirangu/public-service-request-system
 
-**Author:** Willy Macharia
+**Author:** Willy Ndirangu
 
 ---
 
@@ -61,7 +61,7 @@ The database (`service.db`) and the default admin account are created automatica
 
 | Role    | Email               | Password   |
 |---------|---------------------|------------|
-| Admin   | admin@city.go.ke    | admin123   |
+| Admin   | admin@city.go.ke    | admin123   This is a Demo Account|
 | Citizen | Register a new account from the Register page |
 
 Admin and citizens share one login page. Access is role-based, and every admin route is protected on the server.
