@@ -61,7 +61,7 @@ The database (`service.db`) and the default admin account are created automatica
 
 | Role    | Email               | Password   |
 |---------|---------------------|------------|
-| Admin   | admin@city.go.ke    | admin123   This is a Demo Account|
+| Admin   | admin@city.go.ke    | admin123   | This is a demo Account
 | Citizen | Register a new account from the Register page |
 
 Admin and citizens share one login page. Access is role-based, and every admin route is protected on the server.
