@@ -87,7 +87,7 @@ static/uploads/     photos uploaded by citizens
 ---
 
 ## Security notes
-- Passwords are hashed with Werkzeug
+- Passwords are hashed with Werkzeug library that provides tools for requesting, routing, and handling web applications
 - Admin pages are protected with a server-side role check
 - Citizens can only edit, cancel or open their own requests
 - Uploaded files are limited to image types and given unique names
@@ -97,6 +97,7 @@ static/uploads/     photos uploaded by citizens
 
 ## Possible future improvements
 - Real email delivery for password resets and status updates
+- Editing of user requests while they are still pending, incase of a change/mistake
 - Status history timeline and CSV export
 - Pagination for large numbers of requests
 - Two-factor authentication for admins
