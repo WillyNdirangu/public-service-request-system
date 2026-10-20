@@ -16,7 +16,6 @@ A web app where citizens report local problems (broken streetlights, water issue
 - Submit a request with category, location, description, priority (Low / Medium / Urgent) and an optional photo
 - Track status visually: Pending, In Progress, Resolved
 - Receive responses from the admin, shown as "unread" messages (bold, glowing) until opened, with an unread counter in the menu
-- Edit or cancel a request while it is still Pending
 - Forgot password with a secure one-time reset link
 
 ### Administrators
